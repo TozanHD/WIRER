@@ -14,9 +14,11 @@ const geistMono = Geist_Mono({
 });
 
 const dotMatrixFont = localFont({
-  src: "../public/fonts/dot-matrix.ttf", // 配置したフォントファイルへのパス
+  src: "../public/fonts/dot-matrix.woff2", // 元はTTF(15MB)。全グリフそのままWOFF2に変換したもの
   variable: "--font-dot-matrix",
   display: "swap",
+  // 15MBあるため先読みしない。Dot-Matrixモードで実際に使われた時だけブラウザが取得する
+  preload: false,
 });
 
 export const metadata: Metadata = {

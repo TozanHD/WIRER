@@ -104,19 +104,19 @@ const formatMessageText = (text: string, isPreview: boolean = false) => {
         }
 
         // NicoNico Douga Detection
-        // サーバーサイドプロキシ経由で埋め込み（fetch/XHRをインターセプト + CSP除去）
-        const nicoRegExp = /nicovideo\.jp\/watch\/([a-zA-Z0-9]+)/;
+        // 公式の埋め込みプレイヤーを直接読み込む（サーバーを経由しないので転送コストがかからない）
+        const nicoRegExp = /(?:nicovideo\.jp\/watch|nico\.ms)\/([a-zA-Z0-9]+)/;
         const nicoMatch = part.match(nicoRegExp);
         if (nicoMatch) {
           embedElement = (
             <div className="mt-2 w-full max-w-[400px] aspect-video border border-border-color bg-app-bg overflow-hidden">
               <iframe
-                src={`/api/nico-proxy?id=${nicoMatch[1]}`}
+                src={`https://embed.nicovideo.jp/watch/${nicoMatch[1]}`}
                 width="100%"
                 height="100%"
                 frameBorder="0"
-                allow="autoplay; fullscreen; picture-in-picture; storage-access"
-                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-storage-access-by-user-activation"
+                allow="autoplay; fullscreen; picture-in-picture"
+                loading="lazy"
                 allowFullScreen
               ></iframe>
             </div>
